@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Products{% endblock title %}
+{% block root %}
+{% include 'sidebar.html' %}
+
+    <div class="main-content">
+      {% include 'header.html' %}
+        <main>
+          <div class="grid-column-auto-fit-content">
+            <div>
+              <table width="100%">
+                <tbody>
+                  <tr>
+                    <td><b>User ID: </b></td>
+                    <td>C{{chef.id}}</td>
+                  </tr>
+                  <tr>
+                    <td><b>First Name:</b></td>
+                    <td>{{chef.first_name}}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Last Name:</b></td>
+                    <td>{{chef.last_name}}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Username:</b></td>
+                    <td>{{chef.username}}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Email:</b></td>
+                    <td>{{chef.email}}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Date Added:</b></td>
+                    <td>{{chef.date_joined}}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Last Login:</b></td>
+                    <td>{{chef.last_login}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <img class="user_detail_image" src="{% if profile_pic.image %}{{profile_pic.image.url}}{% endif %}" alt="{{profile_pic.user.username}}"/>
+            </div>
+
+        </main>
+    </div>
+{% endblock root %}

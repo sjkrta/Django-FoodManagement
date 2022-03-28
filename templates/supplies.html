@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Supplies{% endblock title %}
+{% block root %}
+{% include 'sidebar.html' %}
+    <div class="main-content">
+      {% include 'header.html' %}
+
+      <main>
+        {% if user.is_staff %}
+        <a href="/admin/app/product/add/"
+        target="popup"
+        onclick="window.open('/admin/app/product/{{i.id}}/change/','popup','width=600,height=600');">
+          <button class="btn">
+            Add New Product <span class="las la-arrow-right"> </span>
+          </button>
+        </a>
+        {% endif %}
+        <form method="post">
+          {% csrf_token %}
+          <div class="grid-column-auto-fit-content">
+          <input id="search_product" name="search_product" placeholder="Search for product"/>
+          <input type="submit" value="Search" class="btn-success"/>
+          </div>
+      </form>
+      <br>
+        <div class="card-body">
+          <table width="100%">
+            <thead>
+              <tr>
+                <td>S.N.</td>
+                <td>Date Added</td>
+                <td>Product ID</td>
+                <td>Product Name</td>
+                <td>Category</td>
+                <td>Quantity</td>
+                <td>Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in product%}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.date_added}}</td>
+                <td>P{{i.id}}</td>
+                <td>{{i.name}}</td>
+                <td>{{i.category.name}}</td>
+                <td>{{i.quantity}}</td>
+                <td>
+                  {% if user.is_staff %}
+                  <a href="/admin/app/product/{{i.id}}/change/" 
+                  target="popup"
+                  onclick="window.open('/admin/app/product/{{i.id}}/change/','popup','width=600,height=600');">
+                    <button class="btn-danger">
+                      Edit
+                    </button>
+                  </a>
+                  {% endif %}
+                  <a href="{% url 'supplies_use_view' i.id %}">
+                    <button class="btn-success">
+                      Use / View
+                    </button>
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+{% endblock root %}

@@ -1,0 +1,55 @@
+<div class="sidebar">
+    <div class="sidebar-brand">
+      <a href="{% url 'dashboard_view' %}">
+      <h2>
+        <span class="las la-leaf" style="font-size: 35px"></span> Food Log
+      </h2>
+    </a>
+    </div>
+
+    <div class="sidebar-menu">
+      <ul>
+        <li>
+          <a href="{% url 'dashboard_view' %}" {% if dashboard_active %}class="active"{% endif %}>
+            <span class="las la-igloo"></span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'supplies_view' %}" {% if supplies_active %}class="active"{% endif %}>
+            <span class="las la-shopping-bag"></span>
+            <span>Supplies</span>
+            </a>
+        </li>
+        {% if user.is_staff %}
+        <li>
+          <a href="{% url 'chefs_view' %}" {% if chefs_active %}class="active"{% endif %}>
+            <span class="las la-users"></span>
+            <span>Chefs</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'notifications_view' %}" {% if notifications_active %}class="active"{% endif %}>
+            <span class="las la-bell"></span>
+            <span>Notifications</span>
+            </a>
+        </li>
+        {% endif %}
+        <li>
+          <a href="{% url 'history_view' %}" {% if history_active %}class="active"{% endif %}>
+            <span class="las la-clock"></span>
+            <span>History</span>
+          </a>
+        </li>
+        <!--
+        <li>
+          <a href="{% url 'inventory_view' %}" {% if inventory_active %}class="active"{% endif %}>
+            <span class="las la-receipt"></span>
+            <span>Inventory</span>
+          </a>
+        </li>
+        -->
+      </ul>
+    </div>
+  </div>
+</div>

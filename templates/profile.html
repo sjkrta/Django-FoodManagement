@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Products{% endblock title %}
+{% block root %}
+{% include 'sidebar.html' %}
+
+    <div class="main-content">
+      {% include 'header.html' %}
+      <main>
+        <div class="grid-column-space-between">
+          {% if user.is_staff %}
+          <a href="/admin/auth/user/{{user.id}}/change/"
+          target="popup"
+          onclick="window.open('/admin/app/product/{{i.id}}/change/','popup','width=600,height=600');">
+            <button class="btn-success">
+              Edit Profile
+            </button>
+          </a>
+          {% else %}
+          <div></div>
+          {% endif %}
+          <a href="{% url 'logout' %}">
+            <button class="btn-danger">
+              Logout
+            </button>
+          </a>
+        </div>
+        <br>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="grid-column-auto-fit-content">
+            {{form.as_p}}
+          <input type="submit" value="Upload Profile Picture" class="btn-success"/>
+          </div>
+      </form>
+      {% if error != '' %}<p class="error">{{error}}</p>{% else %}<p class="error">{{error}}</p>{% endif %}
+        <div class="grid-column-auto-fit-content">
+          <div>
+            <table width="100%">
+              <tbody>
+                <tr>
+                  <td><b>User ID: </b></td>
+                  <td>{% if user.is_staff %}M{{user.id}}{% else %}C{{user.id}}{% endif %}</td>
+                </tr>
+                <tr>
+                  <td><b>First Name:</b></td>
+                  <td>{{user.first_name}}</td>
+                </tr>
+                <tr>
+                  <td><b>Last Name:</b></td>
+                  <td>{{user.last_name}}</td>
+                </tr>
+                <tr>
+                  <td><b>Username:</b></td>
+                  <td>{{user.username}}</td>
+                </tr>
+                <tr>
+                  <td><b>Email:</b></td>
+                  <td>{{user.email}}</td>
+                </tr>
+                <tr>
+                  <td><b>Date Added:</b></td>
+                  <td>{{user.date_joined}}</td>
+                </tr>
+                <tr>
+                  <td><b>Last Login:</b></td>
+                  <td>{{user.last_login}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <img class="user_detail_image" src="{% if profile_pic.image %}{{profile_pic.image.url}}{% endif %}" alt="{{profile_pic.user.username}}"/>
+          </div>
+      </main>
+    </div>
+{% endblock root %}

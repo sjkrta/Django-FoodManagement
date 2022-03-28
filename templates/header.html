@@ -1,0 +1,18 @@
+<header>
+    <div>
+    </div>
+
+    <a href="{% url 'dashboard_profile_view' %}">
+    <div class="user-wrapper">
+      <img
+        src="{% if profile_pic.image %}{{profile_pic.image.url}}{% endif %}"
+        class="logged_user_image"
+        alt="img of admin"
+      />
+      <div>
+        <h4>{{request.user.first_name}} {{request.user.last_name}}</h4>
+        <small> @{{user}} | {% if request.user.is_staff %}Manager{% else %}Chef{% endif %}</small>
+      </div>
+    </div>
+  </a>
+  </header>

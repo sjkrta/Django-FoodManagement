@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Supply | {{i.name}}{% endblock title %}
+{% block root %}
+{% include 'sidebar.html' %}
+    <div class="main-content">
+      {% include 'header.html' %}
+      <main>
+        <form method="post">
+          {% csrf_token %}
+          <div class="grid-column-auto-fit-content">
+          <input id="quantity_input" name="quantity" placeholder="Quantity to be use"/>
+          <input type="submit" value="Use Amount" class="btn-success"/>
+          </div>
+      </form>
+      {% if error != '' %}<p class="error">{{error}}</p>{% else %}<p class="error">{{error}}</p>{% endif %}
+        <div class="grid-column-auto-fit-content">
+          <div>
+            <table width="100%">
+              <tbody>
+                <tr>
+                  <td><b>Product ID:</b></td>
+                  <td>P{{product.id}}</td>
+                </tr>
+                <tr>
+                  <td><b>Name:</b></td>
+                  <td>{{product.name}}</td>
+                </tr>
+                <tr>
+                  <td><b>Category:</b></td>
+                  <td>{{product.category.name}}</td>
+                </tr>
+                <tr>
+                  <td><b>Quantity:</b></td>
+                  <td>{{product.quantity}}</td>
+                </tr>
+                <tr>
+                  <td><b>Date Added:</b></td>
+                  <td>{{product.date_added}}</td>
+                </tr>
+                <tr>
+                  <td><b>Notify Below:</b></td>
+                  <td>{{product.notify_quantity}}</td>
+                </tr>
+                <tr>
+                  <td><b>Notify Before:</b></td>
+                  <td>{{product.notify_by}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <img class="product_detail_image" src="{% if product.image %}{{product.image.url}}{% endif %}" alt="{{product.name}}"/>
+          </div>
+        </div>
+        <br>
+          <h4>Description:</h4>
+        <br>
+        <p>{{product.description}}</p>
+      </main>
+    </div>
+{% endblock root %}

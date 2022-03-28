@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock title %}
+{% block root %}
+<div class="body">
+    <form method='post' class="login-form">
+      {% csrf_token %}
+      <h1>SIGN UP</h1>
+
+      <div class="txt-b">
+        <input type="text" name="first_name" value="{{first_name}}" placeholder="First Name"/>
+      </div>
+
+      <div class="txt-b">
+        <input type="text" name="last_name" value="{{last_name}}" placeholder="Last Name"/>
+      </div>
+
+      <div class="txt-b">
+        <input type="text" name="username" value="{{username}}" placeholder="Username"/>
+      </div>
+
+      <div class="txt-b">
+        <input type="email" name="email" value="{{email}}" placeholder="Email"/>
+      </div>
+
+      <div class="txt-b">
+        <input type="password" name="password1" placeholder="Password"/>
+      </div>
+
+      <div class="txt-b">
+        <input type="password" name="password2" placeholder="Confirm Password"/>
+      </div>
+
+      <p class="error">{{error}}</p>
+      
+      <input type="submit" class="logbtn" value="Register" />
+
+      <div class="buttom-text">
+        Already have an account? <a href="{% url 'login' %}">Log In</a>
+      </div>
+    </form>
+  </div>
+    <!--transition (input title moves up) gives space to write for the first part-->
+    <script type="text/javascript">
+      $(".txt-b input").on("focus", function () {
+        $(this).addClass("focus");
+      });
+
+      /* transition (input moves to its original place) occurs when no value is returned*/
+      $(".txt-b input").on("blur", function () {
+        if ($(this).val() == "") $(this).removeClass("focus");
+      });
+    </script>
+{% endblock root %}

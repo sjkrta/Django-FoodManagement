@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}Products{% endblock title %}
+{% block root %}
+{% include 'sidebar.html' %}
+
+    <div class="main-content">
+      {% include 'header.html' %}
+        <main>
+          {% if user.is_staff %}
+          <button class="btn" id="myBtn">
+            Add New Chef <span class="las la-arrow-right"> </span>
+          </button>
+          {% endif %}
+        <br>
+          <!-- The Modal -->
+          <div id="modal-box" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <!--Modal content main-->
+              <form method='post' class="login-form">
+                {% csrf_token %}
+                <span class="close">&times;</span>
+                <h1>New Chef Details</h1>
+          
+                <div class="txt-b">
+                  <input type="text" name="first_name" value="{{first_name}}" placeholder="First Name"/>
+                </div>
+          
+                <div class="txt-b">
+                  <input type="text" name="last_name" value="{{last_name}}" placeholder="Last Name"/>
+                </div>
+          
+                <div class="txt-b">
+                  <input type="text" name="username" value="{{username}}" placeholder="Username"/>
+                </div>
+          
+                <div class="txt-b">
+                  <input type="email" name="email" value="{{email}}" placeholder="Email"/>
+                </div>
+          
+                <div class="txt-b">
+                  <input type="password" name="password1" placeholder="Password"/>
+                </div>
+          
+                <div class="txt-b">
+                  <input type="password" name="password2" placeholder="Confirm Password"/>
+                </div>
+                
+                <input type="submit" class="logbtn" value="Add" />
+              </form>
+              <!--Modal content ends-->
+            </div>
+          </div>
+          <p class="error left">{{error}}</p>
+          <br>
+          <div class="card-body">
+            <table width="100%">
+              <thead>
+                <tr>
+                  <td>S.N.</td>
+                  <td>Chef ID</td>
+                  <td>Date Joined</td>
+                  <td>First Name</td>
+                  <td>Last Name</td>
+                  <td>Email</td>
+                  <td>Action</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in chefs%}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>C{{i.id}}</td>
+                  <td>{{i.date_joined}}</td>
+                  <td>{{i.first_name}}</td>
+                  <td>{{i.last_name}}</td>
+                  <td>{{i.email}}</td>
+                  <td>
+                    {% if user.is_staff %}
+                    <a href="/admin/auth/user/{{i.id}}/change/"
+                    target="popup"
+                    onclick="window.open('/admin/app/product/{{i.id}}/change/','popup','width=600,height=600');">
+                      <button class="btn-danger">
+                        Edit
+                      </button>
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'chefs_detail_view' i.id %}">
+                      <button class="btn-success">
+                        View
+                      </button>
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div> 
+        </main>
+    </div>
+{% endblock root %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Products{% endblock title %}
+{% block root %}
+{% include 'sidebar.html' %}
+    <div class="main-content">
+      {% include 'header.html' %}
+      <main class="main">
+        <div class="card-body">
+          <table width="100%">
+            <tbody>
+              {% for i in notifications%}
+              <tr>
+                <td class="grid-column-space-between">
+                  <div>{{i.content}}</div>
+                  <div>{{i.time_stamp}}</div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+{% endblock root %}

@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Products{% endblock title %}
+{% block root %}
+{% include 'sidebar.html' %}
+
+    <div class="main-content">
+      {% include 'header.html' %}
+
+
+      <main>
+        <div class="cards">
+          {% if user.is_staff %}
+          <div class="card-single">
+            <div>
+              <h1>{{chefs_count}}</h1>
+              <span>Chefs</span>
+            </div>
+            <div>
+              <span class="las la-users"></span>
+            </div>
+          </div>
+          <div class="card-single">
+            <div>
+              <h1>{{products_count}}</h1>
+              <span>Supplies</span>
+            </div>
+            <div>
+              <span class="las la-shopping-bag"></span>
+            </div>
+          </div>
+          {% else %}
+          <div class="card-single">
+            <div>
+              <h1>{{products_count}}</h1>
+              <span>Supplies</span>
+            </div>
+            <div>
+              <span class="las la-shopping-bag"></span>
+            </div>
+          </div>
+          <div class="card-single">
+            <div>
+              <h1>{{categories_count}}</h1>
+              <span>Categories</span>
+            </div>
+            <div>
+              <span class="las la-layer-group"></span>
+            </div>
+          </div>
+          {% endif %}
+          <div class="card-single">
+            <div>
+              <h1>{{fruits_count}}</h1>
+              <span>Fruits</span>
+            </div>
+            <div>
+              <span class="las la-lemon"></span>
+            </div>
+          </div>
+
+          <div class="card-single">
+            <div>
+              <h1>{{veggies_count}}</h1>
+              <span>Veggies</span>
+            </div>
+            <div>
+              <span class="las la-carrot"></span>
+            </div>
+          </div>
+          <div class="recent-grid">
+            <div class="supplies">
+              <div class="card">
+                <div class="card-header">
+                  <h2>Recent Supplies</h2>
+                  <a href="{% url 'supplies_view' %}">
+                  <button class="btn">
+                    See all <span class="las la-arrow-right"> </span>
+                  </button>
+                </a>
+                </div>
+                <br>
+                <div class="card-body">
+                  <table width="100%">
+                    <thead>
+                      <tr>
+                        <td>S.N.</td>
+                        <td>Supplies Title</td>
+                        <td>Category</td>
+                        <td>Quantity</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in product|slice:":5"%}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i.name}}</td>
+                        <td>{{i.category.name}}</td>
+                        <td>{{i.quantity}}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+            {% if user.is_staff %}
+            <div class="users">
+              <div class="card">
+                <div class="card-header">
+                  <h2>New users</h3>
+                    <a href="{% url 'chefs_view' %}">
+                    <button class="btn">
+                      See all <span class="las la-arrow-right"> </span>
+                    </button>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <table width="100%">
+                    <thead>
+                      <tr>
+                        <td>S.N.</td>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Username</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in chefs|slice:":3"%}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i.first_name}} {{i.last_name}}</td>
+                        <td>{{i.email}}</td>
+                        <td>{{i.username}}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <br>
+                <br>
+                {% endif %}
+ 
+                <div class="card-body">
+                  <div class="user">
+                    <div>
+                      <img
+                        src="{% if headchef.image %}{{ headchef.image.url }}{% endif %}"
+                        class="headchef_image"
+                        alt="headchef image"
+                      />
+                      <div>
+                        <h3>{{headchef.user.first_name}} {{headchef.user.last_name}}</h3>
+                        <small>Head Chef</small>
+                      </div>
+                    </div>
+                  </div>
+                  {{headchef.user.email}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+{% endblock root %}
