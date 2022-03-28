@@ -5,6 +5,52 @@
     <div class="main-content">
       {% include 'header.html' %}
       <main>
+        {% load custom_tags %}
+        <div class="card-body">
+          <table width="100%">
+            <thead>
+              <tr>
+                <td>S.N.</td>
+                <td>Date Added</td>
+                <td>Product Name</td>
+                <td>Category</td>
+                <td>Quantity</td>
+                <td>Inventory Size</td>
+                <td>Inventory Available</td>
+                <td>Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in product %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.date_added}}</td>
+                <td>{{i.name}}</td>
+                <td>{{i.category.name}}</td>
+                <td>{{i.quantity}}</td>
+                <td>{{i.inventory_size}}</td>
+                <td>{{i.inventory_size|sub:i.quantity}}</td>
+                <td>
+                  <a href="{% url 'supplies_use_view' i.id %}">
+                    <button class="btn-success">
+                      Use / View
+                    </button>
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{total_quantity}}</td>
+                <td>{{total_inventory_size}}</td>
+                <td>{{total_inventory_available}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </main>
     </div>
 {% endblock root %}

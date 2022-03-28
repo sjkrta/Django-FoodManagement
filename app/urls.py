@@ -3,12 +3,13 @@ from . import views
 
 urlpatterns = [
     # Accounts
+    # url path, control garne view, name for shortcut
     path('register/', views.register_view, name='register'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('forgotpassword/', views.forgotpassword_view, name='forgotpassword'),
     # Manager
-    path('dashboard/', views.dashboard_view, name='dashboard_view'),
+    path('', views.dashboard_view, name='dashboard_view'),
     path('dashboard/profile/', views.dashboard_profile_view, name='dashboard_profile_view'),
     path('supplies/', views.supplies_view, name='supplies_view'),
     path('supplies/use/<int:id>/', views.supplies_use_view, name='supplies_use_view'),

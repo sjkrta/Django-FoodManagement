@@ -7,12 +7,17 @@ from .views_accounts import *
 from .models import *
 
 # manager
+@login_required
 def dashboard_view(request):
-    profile_pic_url =ProfilePic.objects.get(user=User.objects.get(username=request.user))
+    profile_pic_url=[]
+    try:
+        profile_pic_url =ProfilePic.objects.get(user=User.objects.get(username=request.user))
+    except:
+        profile_pic_url =[]
     product =Product.objects.all().order_by('-date_added')
     chefs =User.objects.filter(is_staff=False)
     categories=Category.objects.all()
-    headchef_username='admin'
+    headchef_username='suravi'
     headchef=[]
     fruits=[]
     veggies=[]
@@ -44,6 +49,7 @@ def dashboard_view(request):
     }
     return render(request, 'dashboard.html', context)
 
+@login_required
 def dashboard_profile_view(request):
     user = User.objects.get(username=request.user)
     profile =[]
@@ -71,6 +77,7 @@ def dashboard_profile_view(request):
     }
     return render(request, 'profile.html', context)
 
+@login_required
 def supplies_view(request):
     profile_pic_url =ProfilePic.objects.get(user=User.objects.get(username=request.user))
     product =Product.objects.all()
@@ -86,6 +93,7 @@ def supplies_view(request):
     }
     return render(request, 'supplies.html', context)
 
+@login_required
 def supplies_use_view(request, id):
     profile_pic_url =ProfilePic.objects.get(user=User.objects.get(username=request.user))
     product =Product.objects.filter(id=id)
@@ -114,6 +122,7 @@ def supplies_use_view(request, id):
     }
     return render(request, 'supplies_detail.html', context)
 
+@login_required
 def chefs_view(request):
     profile_pic_url =ProfilePic.objects.get(user=User.objects.get(username=request.user))
     chefs =User.objects.filter(is_staff=False)
@@ -173,6 +182,7 @@ def chefs_view(request):
     return render(request, 'chefs.html', context)
 
 
+@login_required
 def chefs_detail_view(request, id):
     profile_pic=''
     try:
@@ -195,6 +205,7 @@ def notifications_view(request):
     }
     return render(request, 'notifications.html', context)
 
+@login_required
 def history_view(request):
     profile_pic_url =ProfilePic.objects.get(user=User.objects.get(username=request.user))
     context={
@@ -205,14 +216,28 @@ def history_view(request):
     return render(request, 'history.html', context)
 
 
+@login_required
 def inventory_view(request):
     profile_pic_url =ProfilePic.objects.get(user=User.objects.get(username=request.user))
+    product = Product.objects.all()
+    total_inventory_size=0
+    total_quantity=0
+    total_inventory_available=0
+    for i in product:
+        total_inventory_size = total_inventory_size+ i.inventory_size
+        total_quantity = total_quantity + i.quantity
+        total_inventory_available =total_inventory_available+(i.inventory_size-i.quantity)
     context={
         "profile_pic":profile_pic_url,
         "inventory_active":True,
+        "product":product,
+        "total_inventory_size":total_inventory_size,
+        "total_quantity":total_quantity,
+        "total_inventory_available":total_inventory_available,
     }
     return render(request, 'inventory.html', context)
 
+@login_required
 def chef_dashboard_view(request):
     context={
     }

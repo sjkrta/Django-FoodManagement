@@ -80,7 +80,7 @@ def login_view(request):
                     request, username=username.username, password=password)
                 if user is not None:
                     login(request, user)
-                    return redirect('dashboard_view')
+                    return redirect('next')
                 else:
                     error = 'Username / Password is incorrect.'
             except:
@@ -95,7 +95,7 @@ def login_view(request):
                     )
                 if user is not None:
                     login(request, user)
-                    return redirect('dashboard_view')
+                    return redirect('next')
                 else:
                     error = 'Username / Password is incorrect.'
             except:

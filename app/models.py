@@ -38,6 +38,7 @@ class Product(models.Model):
     name            = models.CharField(max_length=50, unique=True)
     category        = models.ForeignKey(Category, on_delete=models.CASCADE)
     quantity        = models.IntegerField()
+    inventory_size = models.IntegerField(default=0)
     image           = models.ImageField(upload_to='products')
     description     = models.TextField(max_length=2000)
     date_added      = models.DateTimeField()
