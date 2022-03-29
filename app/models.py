@@ -29,11 +29,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-class CategoryForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = '__all__'
-
 class Product(models.Model):
     name            = models.CharField(max_length=50, unique=True)
     category        = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -51,6 +46,19 @@ class Product(models.Model):
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+class ProfilePic(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='accounts', default='accounts/default.jpg')
+
+    def __str__(self):
+        return self.user.username
+
+# form filling models
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = '__all__'
+        
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -58,13 +66,6 @@ class ProductForm(forms.ModelForm):
         widgets = {
             'date_added':DateInput()
         }
-
-class ProfilePic(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='accounts', default='accounts/default.jpg')
-
-    def __str__(self):
-        return self.user.username
 
 class ProfilePicForm(forms.ModelForm):
     class Meta:

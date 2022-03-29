@@ -184,14 +184,16 @@ def chefs_view(request):
 
 @login_required
 def chefs_detail_view(request, id):
-    profile_pic=''
+    profile_pic_url =ProfilePic.objects.get(user=User.objects.get(username=request.user))
+    profile_pics=''
     try:
-        profile_pic =ProfilePic.objects.get(user__id = id)
+        profile_pics =ProfilePic.objects.get(user__id = id)
     except:
-        profile_pic=''
+        profile_pics=''
     context={
         "chef":User.objects.get(id=id),
-        "profile_pic":profile_pic,
+        "profile_pics":profile_pics,
+        "profile_pic":profile_pic_url,
         "chefs_active":True,
     }
     return render(request, 'chefs_detail.html', context)

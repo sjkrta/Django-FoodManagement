@@ -2,7 +2,6 @@
 {% block title %}Products{% endblock title %}
 {% block root %}
 {% include 'sidebar.html' %}
-
     <div class="main-content">
       {% include 'header.html' %}
         <main>
@@ -42,9 +41,8 @@
               </table>
             </div>
             <div>
-              <img class="user_detail_image" src="{% if profile_pic.image %}{{profile_pic.image.url}}{% endif %}" alt="{{profile_pic.user.username}}"/>
+              <img class="user_detail_image" src="{% if profile_pics.image %}{{profile_pics.image.url}}{% endif %}" alt="{{profile_pics.user.username}}"/>
             </div>
-
         </main>
     </div>
 {% endblock root %}
