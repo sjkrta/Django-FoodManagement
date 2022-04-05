@@ -396,3 +396,44 @@ tr:nth-child(even) {
 .dashboard_a{
   background-color: white;
 }
+.txt-b-area textarea{
+  width: 100%;
+  border: 2px solid #adadad;
+  font-size: 15px;
+  color: #333;
+  width: 100%;
+  outline: none;
+  background: none;
+  padding: 5px;
+}
+.txt-b-select,.txt-b-image{
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-gap: 1rem;
+  align-items: center;
+  align-content: center;
+}
+.txt-b-image{
+  margin: 1rem 0;
+}
+.txt-b-select p, .txt-b-image p{
+  margin: 0.5rem 0;
+  color: #818181;
+}
+.txt-b-image input{
+  font-size: 15px;
+  color: #333;
+  width: 100%;
+  outline: none;
+  background: none;
+}
+.txt-b-select select{
+  width: 100%;
+  border: 2px solid #adadad;
+  font-size: 15px;
+  color: #333;
+  width: 100%;
+  outline: none;
+  background: none;
+  padding: 5px;
+}

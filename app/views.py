@@ -82,14 +82,28 @@ def supplies_view(request):
     profile_pic_url =ProfilePic.objects.get(user=User.objects.get(username=request.user))
     product =Product.objects.all()
     if request.method == 'POST':
-        try:
-            product = product.filter(name__icontains=request.POST['search_product'])
-        except:
-            pass
+        if 'search_products' in request.POST:
+            try:
+                products=request.POST['search_product']
+                print(products)
+                product = product.filter(name__icontains=products)
+            except:
+                print('error')
+        elif 'add_products' in request.POST:
+            name = request.POST['name']
+            category = request.POST['category']
+            quantity = request.POST['quantity']
+            inventory_size = request.POST['inventory_size']
+            image = request.FILES['image']
+            description = request.POST['description']
+            notify_quantity = request.POST['notify_quantity']
+            notify_by = request.POST['notify_by']
+            Product.objects.create(name=name, category=Category.objects.get(name=category), quantity=quantity, inventory_size=inventory_size, image=image, description=description, notify_quantity=notify_quantity, notify_by=notify_by)
     context={
         "product": product,
         "supplies_active":True,
         "profile_pic":profile_pic_url,
+        "category":Category.objects.all()
     }
     return render(request, 'supplies.html', context)
 
@@ -138,37 +152,28 @@ def chefs_view(request):
         username = request.POST['username'].strip().lower()
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-        if first_name == '':
-            error = "First name is required."
-        elif last_name == '':
-            error = "Last name is required."
-        elif email == '':
-            error = "Email address is required."
-        elif username == '':
-            error = "Username is required."
-        else:
+        try:
+            user = User.objects.get(username=username)
+            error = 'Username already exists'
+        except:
             try:
-                user = User.objects.get(username=username)
-                error = 'Username already exists'
+                user = User.objects.get(email=email)
+                error = 'Email address already exists.'
             except:
-                try:
-                    user = User.objects.get(email=email)
-                    error = 'Email address already exists.'
-                except:
-                    result = password_check(password1, password2)
-                    if result == '':
-                        error = ''
-                        user = User.objects.create_user(
-                            first_name=first_name,
-                            last_name=last_name,
-                            username=username,email=email,
-                            password=password1,
-                            is_active=True,
-                            is_staff=False,
-                            )
-                        ProfilePic.objects.create(user=user)
-                    else:
-                        error = result
+                result = password_check(password1, password2)
+                if result == '':
+                    error = ''
+                    user = User.objects.create_user(
+                        first_name=first_name,
+                        last_name=last_name,
+                        username=username,email=email,
+                        password=password1,
+                        is_active=True,
+                        is_staff=False,
+                        )
+                    ProfilePic.objects.create(user=user)
+                else:
+                    error = result
     context={
         "chefs":chefs,
         "profile_pic":profile_pic_url,

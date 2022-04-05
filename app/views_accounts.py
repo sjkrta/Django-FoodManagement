@@ -60,15 +60,11 @@ def register_view(request):
         return redirect('dashboard_view')
 
 # login
+
 def login_view(request):
     username = ''
     password = ''
     error = ''
-    next =''
-    if request.GET.get('next') is None:
-        next='dashboard_view'
-    else:
-        next =request.GET.get('next')
     if request.user.is_anonymous:
         if request.method == 'POST':
             username = request.POST['username'].strip().lower()
@@ -80,7 +76,7 @@ def login_view(request):
                     request, username=username.username, password=password)
                 if user is not None:
                     login(request, user)
-                    return redirect('next')
+                    return redirect('dashboard_view')
                 else:
                     error = 'Username / Password is incorrect.'
             except:
@@ -95,7 +91,7 @@ def login_view(request):
                     )
                 if user is not None:
                     login(request, user)
-                    return redirect('next')
+                    return redirect('dashboard_view')
                 else:
                     error = 'Username / Password is incorrect.'
             except:
@@ -106,7 +102,7 @@ def login_view(request):
             }
         return render(request, 'accounts/login.html', context)
     else:
-        return redirect(next)
+        return redirect('dashboard_view')
 
 # logout
 def logout_view(request):

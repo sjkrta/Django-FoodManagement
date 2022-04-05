@@ -8,19 +8,69 @@
 
       <main>
         {% if user.is_staff %}
-        <a href="/admin/app/product/add/"
-        target="popup"
-        onclick="window.open('/admin/app/product/{{i.id}}/change/','popup','width=600,height=600');">
-          <button class="btn">
-            Add New Product <span class="las la-arrow-right"> </span>
-          </button>
-        </a>
+        <button class="btn" id="myBtn">
+          Add New Product <span class="las la-arrow-right"> </span>
+        </button>
         {% endif %}
+      <br>
+        <!-- The Modal -->
+        <div id="modal-box" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <!--Modal content main-->
+            <form method='post' class="login-form" enctype="multipart/form-data">
+              {% csrf_token %}
+              <span class="close">&times;</span>
+              <h1>Product Details</h1>
+        
+              <div class="txt-b">
+                <input type="text" name="name" value="{{name}}" placeholder="Product Name" required/>
+              </div>
+        
+              <div class="txt-b-select">
+                <p>Category: </p>
+                <select name="category">
+                  {% for i in category %}
+                  <option value="{{i}}">{{i}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="txt-b">
+                <input type="number" name="quantity" value="{{quantity}}" placeholder="Quantity" required/>
+              </div>
+        
+              <div class="txt-b">
+                <input type="number" name="inventory_size" value="{{inventory_size}}" placeholder="Inventory Size" required/>
+              </div>
+        
+              <div class="txt-b-image">
+                <p>Image: </p>
+                <input type="file" name="image" accept="image/png, image/jpeg" required>
+              </div>
+        
+              <div class="txt-b-area">
+                <textarea name="description" rows="4" column="10" placeholder="Description......." required></textarea>
+              </div>
+
+              <div class="txt-b">
+                <input type="number" name="notify_quantity" placeholder="Notify Quantity" required/>
+              </div>
+        
+              <div class="txt-b">
+                <input type="text" name="notify_by" placeholder="Notify By" required/>
+              </div>
+              
+              <input type="submit" class="logbtn" value="Add" name="add_products"/>
+            </form>
+            <!--Modal content ends-->
+          </div>
+        </div>
         <form method="post">
           {% csrf_token %}
           <div class="grid-column-auto-fit-content">
           <input id="search_product" name="search_product" placeholder="Search for product"/>
-          <input type="submit" value="Search" class="btn-success"/>
+          <input type="submit" value="Search" class="btn-success" name="search_products"/>
           </div>
       </form>
       <br>

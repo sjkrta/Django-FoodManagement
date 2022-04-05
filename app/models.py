@@ -36,7 +36,7 @@ class Product(models.Model):
     inventory_size = models.IntegerField(default=0)
     image           = models.ImageField(upload_to='products')
     description     = models.TextField(max_length=2000)
-    date_added      = models.DateTimeField()
+    date_added      = models.DateTimeField(auto_now_add=True)
     notify_quantity = models.IntegerField()
     notify_by       = models.CharField(max_length=50)
 
